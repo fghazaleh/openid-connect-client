@@ -1,0 +1,24 @@
+{
+    "name": "fghazaleh/openid-connect-client",
+    "description": "OpenID Connect PHP client supporting authorization code",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Ghazaleh",
+            "email": "franco.ghazaleh@gmail.com"
+        }
+    ],
+    "require":{
+      "php": ">=5.6"
+    },
+    "require-dev": {
+      "phpunit/phpunit": "~5.0"
+    },
+    "autoload": {
+      "psr-4": {
+        "Asg\\": "src/"
+      }
+    },
+    "minimum-stability": "dev"
+}
