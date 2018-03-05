@@ -19,6 +19,7 @@ interface HttpClientInterface
     const HTTP_METHOD_DELETE = 'DELETE';
     const HTTP_METHOD_HEAD = 'HEAD';
 
+
     /**
      * @param string $method;
      * @param string $url;
@@ -75,4 +76,14 @@ interface HttpClientInterface
      * @return mixed
      * */
     public function head($url, array $options = []);
+
+    /**
+     * @return int|null
+     * */
+    public function getResponseCode();
+
+    /**
+     * @return mixed|null
+     * */
+    public function getContent();
 }
