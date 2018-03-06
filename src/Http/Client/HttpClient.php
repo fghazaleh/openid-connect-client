@@ -8,8 +8,10 @@
 
 //https://github.com/jumbojett/OpenID-Connect-PHP/blob/master/src/OpenIDConnectClient.php
 
-namespace Asg\HttpClient;
+namespace Asg\Http\Client;
 
+
+use Asg\Http\Response\Response;
 
 class HttpClient implements HttpClientInterface
 {
@@ -22,15 +24,6 @@ class HttpClient implements HttpClientInterface
      */
     private $timeout;
 
-    /**
-     * @var mixed|null
-     * */
-    private $content = null;
-
-    /**
-     * @var int|null
-     * */
-    private $responseCode = null;
     /**
      * @param string|null $baseUri
      * @param int $timeout (timeout in seconds)
@@ -48,13 +41,10 @@ class HttpClient implements HttpClientInterface
      * @param string $url ;
      * @param array $options ;
      *
-     * @return mixed
+     * @return Response
      * */
     public function request($method, $url, array $options = [])
     {
-        // Reset request from prev. values if any to default values
-        $this->resetRequest();
-
         $headers = $this->getHeaders($options);
         $url = $this->getFullUrl($url,$this->getQueryString($options));
 
@@ -123,21 +113,20 @@ class HttpClient implements HttpClientInterface
         $output = curl_exec($ch);
         // HTTP Response code from server may be required from subclass
         $info = curl_getinfo($ch);
-        $this->setResponseCode($info['http_code']);
+
         if ($output === false) {
             throw new \RuntimeException('Curl error: ' . curl_error($ch));
         }
-        $this->setContent($output);
         // Close the cURL resource, and free system resources
         curl_close($ch);
-        return $output;
+        return new Response($info['http_code'],$output);
     }
 
     /**
      * @param string $url ;
      * @param array $options ;
      *
-     * @return mixed
+     * @return Response
      * */
     public function get($url, array $options = [])
     {
@@ -148,7 +137,7 @@ class HttpClient implements HttpClientInterface
      * @param string $url ;
      * @param array $options ;
      *
-     * @return mixed
+     * @return Response
      * */
     public function post($url, array $options = [])
     {
@@ -159,7 +148,7 @@ class HttpClient implements HttpClientInterface
      * @param string $url ;
      * @param array $options ;
      *
-     * @return mixed
+     * @return Response
      * */
     public function put($url, array $options = [])
     {
@@ -170,7 +159,7 @@ class HttpClient implements HttpClientInterface
      * @param string $url ;
      * @param array $options ;
      *
-     * @return mixed
+     * @return Response
      * */
     public function patch($url, array $options = [])
     {
@@ -181,7 +170,7 @@ class HttpClient implements HttpClientInterface
      * @param string $url ;
      * @param array $options ;
      *
-     * @return mixed
+     * @return Response
      * */
     public function delete($url, array $options = [])
     {
@@ -192,55 +181,13 @@ class HttpClient implements HttpClientInterface
      * @param string $url ;
      * @param array $options ;
      *
-     * @return mixed
+     * @return Response
      * */
     public function head($url, array $options = [])
     {
         throw new \RuntimeException('Implement head() method');
     }
 
-
-    /**
-     * @return int|null
-     * */
-    public function getResponseCode()
-    {
-        return $this->responseCode;
-    }
-
-    /**
-     * @return mixed|null
-     * */
-    public function getContent()
-    {
-        return $this->content;
-    }
-
-    /**
-     * Used to reset the prev. request before create a new request
-     *
-     * @return void;
-     * */
-    private function resetRequest()
-    {
-        $this->setContent(null);
-        $this->setResponseCode(null);
-    }
-    /**
-     * @param int|null
-     * */
-    private function setResponseCode($code)
-    {
-        $this->responseCode = $code;
-    }
-
-    /**
-     * @param mixed|null
-     * */
-    private function setContent($content)
-    {
-        $this->content = $content;
-    }
     /**
      * @param array $options
      * @return bool

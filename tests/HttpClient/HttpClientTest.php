@@ -14,10 +14,10 @@ class HttpClientTest extends PHPUnit_Framework_TestCase
      * */
     function test_create_http_get_request()
     {
-        $httpClient = new \Asg\HttpClient\HttpClient('http://google.com/');
+        $httpClient = new \Asg\Http\Client\HttpClient('http://google.com/');
 
         $output = $httpClient->get('',['query' => ['foo'=>'bar','faz'=>'baz']]);
-        $this->assertEquals(200, $httpClient->getResponseCode());
+        $this->assertEquals(200, $output->getStatusCode());
     }
 
     /**
@@ -25,7 +25,7 @@ class HttpClientTest extends PHPUnit_Framework_TestCase
      * */
     function test_create_http_post_request()
     {
-        $httpClient = new \Asg\HttpClient\HttpClient('http://google.com/');
+        $httpClient = new \Asg\Http\Client\HttpClient('http://google.com/');
         $output = $httpClient->post('',['form_params' => ['foo'=>'bar']]);
         //$this->assertEquals(200, $httpClient->getResponseCode());
     }

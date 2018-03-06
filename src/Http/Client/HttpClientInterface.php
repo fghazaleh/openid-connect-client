@@ -6,8 +6,10 @@
  * Time: 1:40 PM
  */
 
-namespace Asg\HttpClient;
+namespace Asg\Http\Client;
 
+
+use Asg\Http\Response\Response;
 
 interface HttpClientInterface
 {
@@ -25,7 +27,7 @@ interface HttpClientInterface
      * @param string $url;
      * @param array $options;
      *
-     * @return mixed
+     * @return Response
      * */
     public function request($method, $url, array $options = []);
 
@@ -33,7 +35,7 @@ interface HttpClientInterface
      * @param string $url;
      * @param array $options;
      *
-     * @return mixed
+     * @return Response
      * */
     public function get($url, array $options = []);
 
@@ -41,7 +43,7 @@ interface HttpClientInterface
      * @param string $url;
      * @param array $options;
      *
-     * @return mixed
+     * @return Response
      * */
     public function post($url, array $options = []);
 
@@ -49,7 +51,7 @@ interface HttpClientInterface
      * @param string $url;
      * @param array $options;
      *
-     * @return mixed
+     * @return Response
      * */
     public function put($url, array $options = []);
 
@@ -57,7 +59,7 @@ interface HttpClientInterface
      * @param string $url;
      * @param array $options;
      *
-     * @return mixed
+     * @return Response
      * */
     public function patch($url, array $options = []);
 
@@ -65,7 +67,7 @@ interface HttpClientInterface
      * @param string $url;
      * @param array $options;
      *
-     * @return mixed
+     * @return Response
      * */
     public function delete($url, array $options = []);
 
@@ -73,17 +75,8 @@ interface HttpClientInterface
      * @param string $url;
      * @param array $options;
      *
-     * @return mixed
+     * @return Response
      * */
     public function head($url, array $options = []);
 
-    /**
-     * @return int|null
-     * */
-    public function getResponseCode();
-
-    /**
-     * @return mixed|null
-     * */
-    public function getContent();
 }
