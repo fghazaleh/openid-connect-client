@@ -18,7 +18,7 @@ class HttpClient implements HttpClientInterface
     /**
      * @var null|string
      */
-    private $baseUri;
+    private $baseUri = null;
     /**
      * @var int
      */
@@ -33,7 +33,9 @@ class HttpClient implements HttpClientInterface
         if (!function_exists('curl_init')) {
             throw new \RuntimeException('HttpClient needs the CURL PHP extension.');
         }
-        $this->baseUri = $baseUri;
+        if (parse_url($baseUri, PHP_URL_HOST) !== false) {
+            $this->baseUri = $baseUri;
+        }
         $this->timeout = $timeout;
     }
     /**

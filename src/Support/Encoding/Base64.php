@@ -11,6 +11,19 @@ namespace Asg\Support\Encoding;
 
 final class Base64 {
 
+
+    /**
+     * @param string $str
+     * @return string
+     */
+    public static function toUrlEncode($str)
+    {
+        $encode = base64_encode($str);
+        $encode = rtrim($encode, "=");
+        $encode = strtr($encode, "+/", "-_");
+        return $encode;
+    }
+
     /**
      * A wrapper around base64_decode which decodes Base64URL-encoded data,
      * which is not the same alphabet as base64.
@@ -18,7 +31,7 @@ final class Base64 {
      * @param string $base64url;
      * @return string
      */
-    public static function toBase64urlDecode($base64url) {
+    public static function base64urlDecode($base64url) {
         return base64_decode(static::base64urlToBase64($base64url));
     }
 
